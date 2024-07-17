@@ -45,9 +45,16 @@ const UpdateModal = (props: Props) => {
       <View style={styles.modal}>
         <View style={styles.textIputView}>
           <Input
-            placeholder="Update Todos"
+            placeholder="Old Todo"
             onChangeText={(heading) => setUpdateData(heading)}
             value={updateData}
+          />
+           <Input
+            placeholder="New Todo"
+            onChangeText={(heading) => setUpdateData(heading)}
+            value={updateData}
+            inputStyle={{marginTop: WP(3)}}
+            
           />
           <TouchableOpacity
             onPress={handleUpdateTodos}
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: WP(2.7),
     alignSelf: "center",
-    marginTop: WP(10),
+
   },
   textIputView: {
     marginTop: WP(20),
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     width: WP(20),
     borderRadius: WP(2),
     padding: WP(2.5),
-    marginTop: WP(5),
+    marginTop: WP(10),
     alignSelf: "flex-end",
   },
   text: {
