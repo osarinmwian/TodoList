@@ -29,8 +29,6 @@ const MyTodoScreen = ({
     return () => clearTimeout(timer);
   }, []);
 
-  console.log(" todos ", todos);
-
   const handleSelectTodo = (id: string) => {
     setSelectedTodoId(id);
   };
