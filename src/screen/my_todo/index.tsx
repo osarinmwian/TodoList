@@ -1,4 +1,10 @@
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { RootState } from "@app/redux/store";
 import { useSelector } from "react-redux";
@@ -14,7 +20,6 @@ const MyTodoScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
   const todos = useSelector((state: RootState) => state.tasks.items);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -24,8 +29,8 @@ const MyTodoScreen = () => {
   }, []);
 
   const handleSelectTodo = (id: string) => {
-    setSelectedTodoId(id);
     setModalVisible(true);
+    setSelectedTodoId(id);
   };
 
   if (isLoading) {
@@ -70,7 +75,7 @@ const MyTodoScreen = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <FlatList
         data={todos}
         numColumns={1}
@@ -111,7 +116,7 @@ const MyTodoScreen = () => {
         closeModal={() => setModalVisible(!isModalVisible)}
         selectedTodoId={selectedTodoId}
       />
-    </View>
+    </>
   );
 };
 

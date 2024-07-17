@@ -14,7 +14,11 @@ type Props = {
   selectedTodoId: string | null;
 };
 
-const UpdateModal: React.FC<Props> = ({ isVisible, closeModal, selectedTodoId }) => {
+const UpdateModal: React.FC<Props> = ({
+  isVisible,
+  closeModal,
+  selectedTodoId,
+}) => {
   const [updateData, setUpdateData] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
@@ -24,10 +28,11 @@ const UpdateModal: React.FC<Props> = ({ isVisible, closeModal, selectedTodoId })
       dispatch(
         updateTodo({
           id: selectedTodoId,
-          completed: !todos.find((todo) => todo.id === selectedTodoId)?.completed,
+          completed: !todos.find((todo) => todo.id === selectedTodoId)
+            ?.completed,
         })
       );
-      closeModal(); 
+      closeModal();
     }
   };
 
@@ -36,17 +41,15 @@ const UpdateModal: React.FC<Props> = ({ isVisible, closeModal, selectedTodoId })
       <View style={styles.modal}>
         <View style={styles.textIputView}>
           <Input
-            placeholder="Old Todo"
-            onChangeText={(heading) => setUpdateData(heading)}
-            value={updateData}
-          />
-          <Input
-            placeholder="New Todo"
+            placeholder="Update Todo"
             onChangeText={(heading) => setUpdateData(heading)}
             value={updateData}
             inputStyle={{ marginTop: WP(3) }}
           />
-          <TouchableOpacity onPress={handleUpdateTodos} style={styles.touchable}>
+          <TouchableOpacity
+            onPress={handleUpdateTodos}
+            style={styles.touchable}
+          >
             <Text style={styles.text}>{"UPDATE"}</Text>
           </TouchableOpacity>
         </View>
