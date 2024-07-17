@@ -3,42 +3,36 @@ import Input from "@app/component/text_input";
 import { AppDispatch, RootState } from "@app/redux/store";
 import { updateTodo } from "@app/redux/store/taskSlice";
 import { COLORS, SIZE } from "@assets/themes";
-import React, {  useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { widthPercentageToDP as WP } from "react-native-responsive-screen";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
   isVisible: boolean;
-  closeModal?: () => void;
+  closeModal: () => void;
+  selectedTodoId: string | null;
 };
 
-const UpdateModal = (props: Props) => {
+const UpdateModal: React.FC<Props> = ({ isVisible, closeModal, selectedTodoId }) => {
   const [updateData, setUpdateData] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
-  const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
-
 
   const handleUpdateTodos = () => {
     if (selectedTodoId) {
       dispatch(
         updateTodo({
           id: selectedTodoId,
-          completed: !todos.find((todo) => todo.id === selectedTodoId)
-            ?.completed,
+          completed: !todos.find((todo) => todo.id === selectedTodoId)?.completed,
         })
       );
-      setSelectedTodoId(null);
+      closeModal(); 
     }
   };
+
   return (
-    <CustomModal isVisible={props.isVisible} onBackdropPress={props.closeModal}>
+    <CustomModal isVisible={isVisible} onBackdropPress={closeModal}>
       <View style={styles.modal}>
         <View style={styles.textIputView}>
           <Input
@@ -52,13 +46,8 @@ const UpdateModal = (props: Props) => {
             value={updateData}
             inputStyle={{ marginTop: WP(3) }}
           />
-          <TouchableOpacity
-            onPress={handleUpdateTodos}
-            style={styles.touchable}
-          >
-            <Text style={styles.text}>
-              { "UPDATE"}
-            </Text>
+          <TouchableOpacity onPress={handleUpdateTodos} style={styles.touchable}>
+            <Text style={styles.text}>{"UPDATE"}</Text>
           </TouchableOpacity>
         </View>
       </View>
