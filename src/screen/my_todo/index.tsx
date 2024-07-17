@@ -1,4 +1,10 @@
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { RootState } from "@app/redux/store";
 import { useSelector } from "react-redux";
@@ -8,7 +14,11 @@ import { widthPercentageToDP as WP } from "react-native-responsive-screen";
 import { COLORS } from "@assets/themes";
 import { AntDesign } from "@expo/vector-icons";
 
-const MyTodoScreen = () => {
+const MyTodoScreen = ({
+  setSelectedTodoId,
+}: {
+  setSelectedTodoId: (id: string) => void;
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const todos = useSelector((state: RootState) => state.tasks.items);
   useEffect(() => {
@@ -19,7 +29,12 @@ const MyTodoScreen = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log(" todos ",  todos )
+  console.log(" todos ", todos);
+
+  const handleSelectTodo = (id: string) => {
+    setSelectedTodoId(id);
+  };
+
   if (isLoading) {
     return (
       <View style={{ marginVertical: "50%" }}>
@@ -69,15 +84,30 @@ const MyTodoScreen = () => {
       renderItem={({ item }) => (
         <View style={styles.container}>
           <View style={styles.content}>
-            <AntDesign
-              name="staro"
-              size={WP(5.6)}
-              color={COLORS.black}
-              style={styles.icon}
-            />
-            <Text style={styles.text}>
-              {item?.heading[0].toUpperCase() + item.heading.slice(1)}
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AntDesign
+                name="staro"
+                size={WP(5.6)}
+                color={COLORS.black}
+                style={styles.icon}
+              />
+              <Text style={styles.text}>
+                {item?.heading[0].toUpperCase() + item.heading.slice(1)}
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => handleSelectTodo(item.id)}
+              style={styles.touchable}
+            >
+              <Text style={styles.touchableText}>UPDATE TODO</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}

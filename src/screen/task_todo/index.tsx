@@ -19,7 +19,6 @@ const TodoItemsScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
-  const [isModalVisible, setModalVisible] = useState(false);
   const handleDeleteAll = () => {
     todos.forEach((todo) => {
       dispatch(deleteTodo(todo.id));
@@ -33,9 +32,6 @@ const TodoItemsScreen = () => {
 
     return () => clearTimeout(timer);
   }, []);
-  const handleUpdateTodos = () => {
-    setModalVisible(true);
-  };
 
   if (isLoading) {
     return (
@@ -70,30 +66,19 @@ const TodoItemsScreen = () => {
         <Text style={styles.completeTodosText}>
           {`Remaining ${10 - todos.length} todos to be completed`}
         </Text>
-
-        <TouchableOpacity onPress={handleUpdateTodos} style={styles.touchable}>
-          <Text style={styles.text}>UPDATE TODO</Text>
-        </TouchableOpacity>
-        <UpdateModal
-          isVisible={isModalVisible}
-          closeModal={() => setModalVisible(!isModalVisible)}
-        />
       </View>
     );
-  }  if (todos.length < 1) {
+  }
+  if (todos.length < 1) {
     return (
       <View>
         <CardScreen icon="check" size={WP(27)} />
         <Text style={styles.completeTodosText}>
           {`You have 10 todos to be completed`}
         </Text>
-     
       </View>
     );
-  }
-  
-  
-  else if (todos.length === 10) {
+  } else if (todos.length === 10) {
     return (
       <View>
         <CardScreen icon="check" size={WP(27)} />

@@ -1,15 +1,14 @@
 import CustomModal from "@app/component/modal";
 import Input from "@app/component/text_input";
 import { AppDispatch, RootState } from "@app/redux/store";
-import { addTodo, fetchTodos, updateTodo } from "@app/redux/store/taskSlice";
+import { updateTodo } from "@app/redux/store/taskSlice";
 import { COLORS, SIZE } from "@assets/themes";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Keyboard,
 } from "react-native";
 import { widthPercentageToDP as WP } from "react-native-responsive-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,26 +19,24 @@ type Props = {
 };
 
 const UpdateModal = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [updateData, setUpdateData] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
-  const handleUpdateTodos = () => {
-    todos.forEach((todo) => {
-      if (!todo.completed) {
-        dispatch(updateTodo({ id: todo.id, completed: true }));
-        Keyboard.dismiss();
-      }
-    });
-    Keyboard.dismiss();
-  };
+  const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
 
-  useEffect(() => {
-    setIsLoading(true)
-    dispatch(fetchTodos())
-      .then(() => setIsLoading(false))
-      .catch((error) => console.error("Error fetching todos:", error));
-  }, []);
+
+  const handleUpdateTodos = () => {
+    if (selectedTodoId) {
+      dispatch(
+        updateTodo({
+          id: selectedTodoId,
+          completed: !todos.find((todo) => todo.id === selectedTodoId)
+            ?.completed,
+        })
+      );
+      setSelectedTodoId(null);
+    }
+  };
   return (
     <CustomModal isVisible={props.isVisible} onBackdropPress={props.closeModal}>
       <View style={styles.modal}>
@@ -49,19 +46,18 @@ const UpdateModal = (props: Props) => {
             onChangeText={(heading) => setUpdateData(heading)}
             value={updateData}
           />
-           <Input
+          <Input
             placeholder="New Todo"
             onChangeText={(heading) => setUpdateData(heading)}
             value={updateData}
-            inputStyle={{marginTop: WP(3)}}
-            
+            inputStyle={{ marginTop: WP(3) }}
           />
           <TouchableOpacity
             onPress={handleUpdateTodos}
             style={styles.touchable}
           >
             <Text style={styles.text}>
-              {isLoading ? "Loading..." : "UPDATE"}
+              { "UPDATE"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -81,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: WP(2.7),
     alignSelf: "center",
-
   },
   textIputView: {
     marginTop: WP(20),
