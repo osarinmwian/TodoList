@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchTodosApi, addTodoApi, deleteTodoApi } from "./dataStore";
+import { fetchTodosApi, addTodoApi, deleteTodoApi, updateTodoApi } from "./dataStore";
 
 type Todo = {
   id: string;
   heading: string;
   completed: boolean;
 };
-
 
 export const fetchTodos = createAsyncThunk<Todo[]>(
   "tasks/fetchTodos",
@@ -32,6 +31,14 @@ export const deleteTodo = createAsyncThunk<string, string>(
   }
 );
 
+export const updateTodo = createAsyncThunk<Todo, { id: string, completed: boolean }>(
+  "tasks/updateTodo",
+  async ({ id, completed }) => {
+    const updatedTodo = await updateTodoApi(id, completed);
+    return updatedTodo;
+  }
+);
+
 const tasksSlice = createSlice({
   name: "tasks",
   initialState: {
@@ -51,6 +58,12 @@ const tasksSlice = createSlice({
       })
       .addCase(deleteTodo.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        const updatedIndex = state.items.findIndex((item) => item.id === action.payload.id);
+        if (updatedIndex !== -1) {
+          state.items[updatedIndex] = action.payload;
+        }
       });
   },
 });

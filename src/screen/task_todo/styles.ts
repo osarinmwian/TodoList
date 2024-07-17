@@ -52,4 +52,17 @@ export const styles = StyleSheet.create({
     color: COLORS.gray,
     alignSelf: "center",
   },
+   touchable: {
+    marginVertical: WP(2),
+    backgroundColor: COLORS.purple,
+    borderRadius: WP(2),
+    padding: WP(2.5),
+    marginTop: WP(20),
+    marginHorizontal: WP(5),
+    alignSelf: "flex-end",
+  },
+  text: {
+    color: COLORS.white,
+    alignSelf: "center",
+  },
 });

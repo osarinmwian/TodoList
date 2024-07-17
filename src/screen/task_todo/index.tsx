@@ -1,8 +1,14 @@
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "@app/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTodo } from "@app/redux/store/taskSlice";
+import { deleteTodo, fetchTodos, updateTodo } from "@app/redux/store/taskSlice";
 import CardScreen from "../card";
 import { styles } from "./styles";
 import { widthPercentageToDP as WP } from "react-native-responsive-screen";
@@ -25,6 +31,19 @@ const TodoItemsScreen = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
+  }, []);
+  const handleUpdateTodos = () => {
+    todos.forEach((todo) => {
+      if (!todo.completed) {
+        dispatch(updateTodo({ id: todo.id, completed: true }));
+      }
+    });
+  };
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+      .then(() => setIsLoading(false))
+      .catch((error) => console.error("Error fetching todos:", error));
   }, []);
 
   if (isLoading) {
@@ -60,6 +79,10 @@ const TodoItemsScreen = () => {
         <Text style={styles.completeTodosText}>
           {`Remaining ${10 - todos.length} todos to be completed`}
         </Text>
+
+        <TouchableOpacity onPress={handleUpdateTodos} style={styles.touchable}>
+          <Text style={styles.text}>UPDATE TODO</Text>
+        </TouchableOpacity>
       </View>
     );
   } else if (todos.length === 10) {
