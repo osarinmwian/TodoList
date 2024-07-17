@@ -1,0 +1,64 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noEmit": true,
+    "strict": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "noImplicitAny": true,
+    "paths": {
+      "@app/*": [
+        "src/*"
+      ],
+      "tests": [
+        "test/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@themes": [
+        "assets/themes/index.ts"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@constants": [
+        "src/constants/index.ts"
+      ],
+      "@navigation/*": [
+        "src/navigation/*"
+      ],
+      "@screens/*": [
+        "src/screens/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@utils": [
+        "assets/themes/index.tsx"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+  ]
+}
