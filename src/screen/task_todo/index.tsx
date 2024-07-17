@@ -80,7 +80,20 @@ const TodoItemsScreen = () => {
         />
       </View>
     );
-  } else if (todos.length === 10) {
+  }  if (todos.length < 1) {
+    return (
+      <View>
+        <CardScreen icon="check" size={WP(27)} />
+        <Text style={styles.completeTodosText}>
+          {`You have 10 todos to be completed`}
+        </Text>
+     
+      </View>
+    );
+  }
+  
+  
+  else if (todos.length === 10) {
     return (
       <View>
         <CardScreen icon="check" size={WP(27)} />

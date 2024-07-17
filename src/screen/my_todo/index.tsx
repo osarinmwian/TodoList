@@ -76,7 +76,7 @@ const MyTodoScreen = () => {
               style={styles.icon}
             />
             <Text style={styles.text}>
-              {item.heading[0].toUpperCase() + item.heading.slice(1)}
+              {item?.heading[0].toUpperCase() + item.heading.slice(1)}
             </Text>
           </View>
         </View>

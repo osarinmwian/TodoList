@@ -1,7 +1,4 @@
 import CustomModal from "@app/component/modal";
-import Input from "@app/component/text_input";
-import { AppDispatch, RootState } from "@app/redux/store";
-import { addTodo } from "@app/redux/store/taskSlice";
 import { COLORS } from "@assets/themes";
 import React from "react";
 import { View, Text, Pressable } from "react-native";

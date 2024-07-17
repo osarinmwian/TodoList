@@ -10,7 +10,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Keyboard,
-  Alert,
 } from "react-native";
 import { widthPercentageToDP as WP } from "react-native-responsive-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,18 +25,21 @@ const UpdateModal = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
   const handleUpdateTodos = () => {
-    // todos.forEach((todo) => {
-    //   if (!todo.completed) {
-    //     dispatch(updateTodo({ id: todo.id, completed: true }));
-    //   }
-    // });
+    todos.forEach((todo) => {
+      if (!todo.completed) {
+        dispatch(updateTodo({ id: todo.id, completed: true }));
+        Keyboard.dismiss();
+      }
+    });
+    Keyboard.dismiss();
   };
 
-//   useEffect(() => {
-//     dispatch(fetchTodos())
-//       .then(() => setIsLoading(false))
-//       .catch((error) => console.error("Error fetching todos:", error));
-//   }, []);
+  useEffect(() => {
+    setIsLoading(true)
+    dispatch(fetchTodos())
+      .then(() => setIsLoading(false))
+      .catch((error) => console.error("Error fetching todos:", error));
+  }, []);
   return (
     <CustomModal isVisible={props.isVisible} onBackdropPress={props.closeModal}>
       <View style={styles.modal}>

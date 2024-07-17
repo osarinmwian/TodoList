@@ -55,6 +55,7 @@ const tasksSlice = createSlice({
       .addCase(addTodo.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
+      
       .addCase(deleteTodo.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
       })
