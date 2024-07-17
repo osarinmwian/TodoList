@@ -19,6 +19,7 @@ const MyTodoScreen = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  console.log(" todos ",  todos )
   if (isLoading) {
     return (
       <View style={{ marginVertical: "50%" }}>

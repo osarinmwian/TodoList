@@ -91,6 +91,7 @@ const BottomNavigation = () => {
         isVisible={isModalVisible}
         closeModal={() => setModalVisible(!isModalVisible)}
       />
+      
       <MoreModal isVisible={visible} closeModal={() => setVisible(!visible)} />
     </>
   );

@@ -35,11 +35,12 @@ type Todo = {
   };
 
   export const updateTodoApi = async (id: string, completed: boolean): Promise<Todo> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const updatedTodo: Todo = { id, heading: "Updated Heading", completed };
-        resolve(updatedTodo);
-      }, 500);
-    });
-  };
+ 
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const updatedTodo: Todo = { id, heading: "Updated Heading", completed };
+      resolve(updatedTodo);
+    }, 500);
+  });
+};
   

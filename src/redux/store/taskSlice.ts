@@ -23,6 +23,7 @@ export const addTodo = createAsyncThunk<Todo, string>(
   }
 );
 
+
 export const deleteTodo = createAsyncThunk<string, string>(
   "tasks/deleteTodo",
   async (id: string) => {
@@ -30,7 +31,6 @@ export const deleteTodo = createAsyncThunk<string, string>(
     return deletedId;
   }
 );
-
 export const updateTodo = createAsyncThunk<Todo, { id: string, completed: boolean }>(
   "tasks/updateTodo",
   async ({ id, completed }) => {
@@ -38,7 +38,6 @@ export const updateTodo = createAsyncThunk<Todo, { id: string, completed: boolea
     return updatedTodo;
   }
 );
-
 const tasksSlice = createSlice({
   name: "tasks",
   initialState: {

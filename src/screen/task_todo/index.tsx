@@ -13,12 +13,13 @@ import CardScreen from "../card";
 import { styles } from "./styles";
 import { widthPercentageToDP as WP } from "react-native-responsive-screen";
 import { COLORS } from "@assets/themes";
+import UpdateModal from "../update_modal/updateModal";
 
 const TodoItemsScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.tasks.items);
-
+  const [isModalVisible, setModalVisible] = useState(false);
   const handleDeleteAll = () => {
     todos.forEach((todo) => {
       dispatch(deleteTodo(todo.id));
@@ -33,18 +34,8 @@ const TodoItemsScreen = () => {
     return () => clearTimeout(timer);
   }, []);
   const handleUpdateTodos = () => {
-    todos.forEach((todo) => {
-      if (!todo.completed) {
-        dispatch(updateTodo({ id: todo.id, completed: true }));
-      }
-    });
+    setModalVisible(true);
   };
-
-  useEffect(() => {
-    dispatch(fetchTodos())
-      .then(() => setIsLoading(false))
-      .catch((error) => console.error("Error fetching todos:", error));
-  }, []);
 
   if (isLoading) {
     return (
@@ -83,6 +74,10 @@ const TodoItemsScreen = () => {
         <TouchableOpacity onPress={handleUpdateTodos} style={styles.touchable}>
           <Text style={styles.text}>UPDATE TODO</Text>
         </TouchableOpacity>
+        <UpdateModal
+          isVisible={isModalVisible}
+          closeModal={() => setModalVisible(!isModalVisible)}
+        />
       </View>
     );
   } else if (todos.length === 10) {
